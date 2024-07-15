@@ -1,5 +1,6 @@
 ﻿using PlantAndHealth.BD;
 using PlantAndHealth.CL;
+using PlantAndHealth.Validaciones;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,21 +31,34 @@ namespace PlantAndHealth.UI
         {
             try
             {
-                bodega.Nombre = textBoxNombre.Text;
-                bodega.Sucursal = (Sucursal)comboBoxSucursales.SelectedItem;
+                
 
-                //Almacenamiento
-                //Global.BodegaAlmacen.AñadirBodega(bodega);
-                //Global.plantAndHealth.Bodega.AñadirBodega(bodega);
-                BodegaData.AñadirBodega(bodega);
-                MessageBox.Show("Bodega almacenada correctamente...");
-                Global.LimpiarControles(this);
-                this.Close();
+                if (validarFormatoCampos())
+                {
+                    bodega.Nombre = textBoxNombre.Text;
+                    bodega.Sucursal = (Sucursal)comboBoxSucursales.SelectedItem;
+                    BodegaData.AñadirBodega(bodega);
+                    MessageBox.Show("Bodega almacenada correctamente...");
+                    Global.LimpiarControles(this);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Campos con formato incorrecto");
+                }
+               
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private bool validarFormatoCampos()
+        {
+            bool textValidaciones = ValidarFormatoForms.validarTexts(textBoxNombre);
+            bool comboValidaciones = ValidarFormatoForms.validarComboBox(comboBoxSucursales);
+            return textValidaciones && comboValidaciones;
         }
 
         private void buttonCancelar_Click(object sender, EventArgs e)

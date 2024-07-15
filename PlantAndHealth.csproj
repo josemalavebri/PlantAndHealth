@@ -149,6 +149,7 @@
     <Compile Include="UI\MenuPrincipal.Designer.cs">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ValidarFormatoForms.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

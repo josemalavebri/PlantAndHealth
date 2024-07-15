@@ -1,5 +1,6 @@
 ﻿using PlantAndHealth.BD;
 using PlantAndHealth.CL;
+using PlantAndHealth.Validaciones;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,21 +36,33 @@ namespace PlantAndHealth.UI
         {
             try
             {
-                sucursal.Nombre = textBoxNombre.Text;
-                sucursal.Comuna = (Comuna)comboBoxComunas.SelectedItem;
 
-                //Almacenamiento
-                //Global.SucursalAlmacen.AñadirSucursal(sucursal);
-                //Global.plantAndHealth.Sucursal.AñadirSucursal(sucursal);
-                SucursalData.AñadirSucursal(sucursal);
-                MessageBox.Show("Sucursal almacenada correctamente...");
-                Global.LimpiarControles(this);
-                this.Close();
+                if (validarFormatoCampos())
+                {
+                    sucursal.Nombre = textBoxNombre.Text;
+                    sucursal.Comuna = (Comuna)comboBoxComunas.SelectedItem;
+                    SucursalData.AñadirSucursal(sucursal);
+                    MessageBox.Show("Sucursal almacenada correctamente...");
+                    Global.LimpiarControles(this);
+                    this.Close();
+                else
+                {
+                    MessageBox.Show("Campos con formato incorrecto");
+                }
+
+               
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private bool validarFormatoCampos()
+        {
+            bool textValidaciones = ValidarFormatoForms.validarTexts(textBoxNombre);
+            bool comboValidaciones = ValidarFormatoForms.validarComboBox(comboBoxComunas);
+            return textValidaciones && comboValidaciones;
         }
 
         private void FrmSucursal_Load(object sender, EventArgs e)

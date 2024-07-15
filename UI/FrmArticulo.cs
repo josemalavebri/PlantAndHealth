@@ -1,5 +1,6 @@
 ﻿using PlantAndHealth.BD;
 using PlantAndHealth.CL;
+using PlantAndHealth.Validaciones;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,24 +30,43 @@ namespace PlantAndHealth.UI
         {
             try
             {
-                articulo.Id = textBoxCodigo.Text;
-                articulo.Nombre = textBoxNombre.Text;
-                articulo.Familia = textBoxFamilia.Text;
-                articulo.PrecioUnitario = double.Parse(textBoxPrecio.Text);
-                articulo.Costo = double.Parse(textBoxCosto.Text);
 
-                //Almacenamiento
-                //Global.ArticuloAlmacen.AñadirArticulo(articulo);
-                //Global.plantAndHealth.Articulo.AñadirArticulo(articulo);
-                ArticuloData.AñadirArticulo(articulo);
-                MessageBox.Show("Articulo almacenado correctamente...");
-                Global.LimpiarControles(this);
-                this.Close();
+                if (validarFormatoCampos())
+                {
+                    articulo.Id = textBoxCodigo.Text;
+                    articulo.Nombre = textBoxNombre.Text;
+                    articulo.Familia = textBoxFamilia.Text;
+                    articulo.PrecioUnitario = double.Parse(textBoxPrecio.Text);
+                    articulo.Costo = double.Parse(textBoxCosto.Text);
+
+                    //Almacenamiento
+                    //Global.ArticuloAlmacen.AñadirArticulo(articulo);
+                    //Global.plantAndHealth.Articulo.AñadirArticulo(articulo);
+                    ArticuloData.AñadirArticulo(articulo);
+                    MessageBox.Show("Articulo almacenado correctamente...");
+                    Global.LimpiarControles(this);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Campos con formato incorrecto");
+                }
+
+
+
+               
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private bool validarFormatoCampos()
+        {
+            bool textValidaciones = ValidarFormatoForms.validarTexts(textBoxNombre,textBoxCodigo,textBoxFamilia);
+            bool numberValidaciones = ValidarFormatoForms.validarNumbers(textBoxCosto, textBoxPrecio);
+            return textValidaciones && numberValidaciones;
         }
 
         private void FrmArticulo_Load(object sender, EventArgs e)
