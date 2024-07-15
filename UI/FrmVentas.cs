@@ -1,4 +1,5 @@
-﻿using PlantAndHealth.CL;
+﻿using PlantAndHealth.BD;
+using PlantAndHealth.CL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,27 +15,42 @@ namespace PlantAndHealth.UI
 {
     public partial class FrmVentas : Form
     {
+        Ventas venta = new Ventas();
         public FrmVentas()
         {
             InitializeComponent();
+            comboBoxClientes.DataSource = ClienteData.ObtenerCliente();
+            comboBoxClientes.DisplayMember = "Nombres";
+            comboBoxClientes.ValueMember = "Numero";
+
+            comboBoxBodega.DataSource = BodegaData.ObtenerBodegas();
+            comboBoxBodega.DisplayMember = "Nombre";
+            comboBoxBodega.ValueMember = "Id";
+
+            comboBoxVendedores.DataSource = VendedorData.ObtenerVendedor();
+            comboBoxVendedores.DisplayMember = "Nombres";
+            comboBoxVendedores.ValueMember = "Id";
+            Global.LimpiarControles(this);
         }
 
         private void FrmVentas_Load(object sender, EventArgs e)
         {
             //Global.secuencia = Global.secuencia + 1;
-            lbl_codigo.Text = "N° " + Global.GeneraSecuenciaVentas();
-            comboBoxClientes.DataSource = Global.ClienteAlmacen.ObtenerClientes();
-            comboBoxClientes.DisplayMember = "Id";
+            //lbl_codigo.Text = "N° " + Global.GeneraSecuenciaVentas();
+            /*comboBoxClientes.DataSource = ClientesData.ObtenerCliente();
+            comboBoxClientes.DisplayMember = "Nombre";
             comboBoxClientes.ValueMember = "Id";
 
-            comboBoxBodega.DataSource = Global.BodegaAlmacen.ObtenerBodegas();
+            comboBoxBodega.DataSource = BodegaData.ObtenerBodegas();
             comboBoxBodega.DisplayMember = "Nombre";
-            comboBoxBodega.ValueMember = "Nombre";
-            comboBoxVendedores.DataSource = Global.VendedorAlmacen.ObtenerVendedores();
-            comboBoxVendedores.DisplayMember = "Nombres";
+            comboBoxBodega.ValueMember = "Id";
 
-            comboBoxVendedores.ValueMember = "Nombres";
-            Global.LimpiarControles(this);                                                
+            comboBoxVendedores.DataSource = VendedoresData.ObtenerVendedor;
+            comboBoxVendedores.DisplayMember = "Nombres";
+            comboBoxVendedores.ValueMember = "Id";
+            Global.LimpiarControles(this);*/
+            
+            
         }
 
         private void comboBoxClientes_SelectedIndexChanged(object sender, EventArgs e)

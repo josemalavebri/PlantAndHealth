@@ -59,12 +59,15 @@
     <Compile Include="AL\VendedorAlmacen.cs" />
     <Compile Include="BD\ArticuloData.cs" />
     <Compile Include="BD\BodegaData.cs" />
+    <Compile Include="BD\ClienteData.cs" />
     <Compile Include="BD\ComunaData.cs" />
     <Compile Include="BD\DatabaseConnection.cs" />
     <Compile Include="BD\ProvinciaData.cs" />
     <Compile Include="BD\RegionData.cs" />
     <Compile Include="BD\StockData.cs" />
     <Compile Include="BD\SucursalData.cs" />
+    <Compile Include="BD\VendedorData.cs" />
+    <Compile Include="BD\VentaData.cs" />
     <Compile Include="CL\Articulo.cs" />
     <Compile Include="CL\Bodega.cs" />
     <Compile Include="CL\Cliente.cs" />
