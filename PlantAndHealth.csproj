@@ -62,6 +62,7 @@
     <Compile Include="BD\ClienteData.cs" />
     <Compile Include="BD\ComunaData.cs" />
     <Compile Include="BD\DatabaseConnection.cs" />
+    <Compile Include="BD\DetalleVentaData.cs" />
     <Compile Include="BD\ProvinciaData.cs" />
     <Compile Include="BD\RegionData.cs" />
     <Compile Include="BD\StockData.cs" />

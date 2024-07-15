@@ -45,6 +45,7 @@ namespace PlantAndHealth.UI
                     MessageBox.Show("Sucursal almacenada correctamente...");
                     Global.LimpiarControles(this);
                     this.Close();
+                }
                 else
                 {
                     MessageBox.Show("Campos con formato incorrecto");

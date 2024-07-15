@@ -51,10 +51,6 @@ namespace PlantAndHealth.UI
                 {
                     MessageBox.Show("Campos con formato incorrecto");
                 }
-
-
-
-               
             }
             catch (Exception ex)
             {

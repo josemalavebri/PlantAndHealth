@@ -108,6 +108,7 @@
             this.button_agregar.Size = new System.Drawing.Size(47, 40);
             this.button_agregar.TabIndex = 8;
             this.button_agregar.UseVisualStyleBackColor = true;
+            this.button_agregar.Click += new System.EventHandler(this.button_agregar_Click);
             // 
             // comboBox_items
             // 
@@ -134,6 +135,7 @@
             this.btn_guardar.TabIndex = 15;
             this.btn_guardar.Text = "&Guardar";
             this.btn_guardar.UseVisualStyleBackColor = true;
+            this.btn_guardar.Click += new System.EventHandler(this.btn_guardar_Click);
             // 
             // groupBox_detalleOrden
             // 

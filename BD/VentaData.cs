@@ -22,7 +22,6 @@ namespace PlantAndHealth.BD
                     cmd.Parameters.AddWithValue("@ID_VENDEDOR", ventas.Vendedor.Id);
                     cmd.Parameters.AddWithValue("@BODEGA_ID", ventas.Bodega.Id);
                     cmd.Parameters.AddWithValue("@FECHA", ventas.Fecha);
-                    
 
                     connection.Open();
                     cmd.ExecuteNonQuery();
@@ -49,7 +48,8 @@ namespace PlantAndHealth.BD
                             {
                                 Documento = reader["DOCUMENTO"].ToString(),
                                 Fecha = Convert.ToDateTime(reader["FECHA"]),
-                                Cliente = new Cliente {
+                                Cliente = new Cliente
+                                {
                                     Numero = Convert.ToInt32(reader["ID_CLIENTE"])
                                 },
                                 TipoDocumento = reader["TIPO_DOCUMENTO"].ToString(),
