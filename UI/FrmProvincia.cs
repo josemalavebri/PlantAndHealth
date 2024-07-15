@@ -1,5 +1,6 @@
 ﻿using PlantAndHealth.BD;
 using PlantAndHealth.CL;
+using PlantAndHealth.Validaciones;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,22 +35,37 @@ namespace PlantAndHealth.UI
         {
             try
             {
-                provincia.Id = Global.GeneraSecuenciaProvincia();
-                provincia.Nombre = textBoxNombre.Text;
-                provincia.Region = (Region)comboBoxRegiones.SelectedItem;
+                if (validarFormatoCampos())
+                {
+                    provincia.Id = Global.GeneraSecuenciaProvincia();
+                    provincia.Nombre = textBoxNombre.Text;
+                    provincia.Region = (Region)comboBoxRegiones.SelectedItem;
 
-                //Almacenamiento
-                //Global.ProvinciaAlmacen.AñadirProvincia(provincia);
-                //Global.plantAndHealth.Provincia.AñadirProvincia(provincia);
-                ProvinciaData.AñadirProvincia(provincia);
-                MessageBox.Show("Provincia almacenada correctamente...");
-                Global.LimpiarControles(this);
-                this.Close();
+                    ProvinciaData.AñadirProvincia(provincia);
+                    MessageBox.Show("Provincia almacenada correctamente...");
+                    Global.LimpiarControles(this);
+                    this.Close();
+
+                }
+                else
+                {
+                    MessageBox.Show("Campos con formato incorrecto");
+                }
+               
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private bool validarFormatoCampos()
+        {
+            bool textValidaciones = ValidarFormatoForms.validarTexts(textBoxNombre);
+            bool comboValidaciones = ValidarFormatoForms.validarComboBox(comboBoxRegiones);
+
+            return textValidaciones && comboValidaciones;
+
         }
 
         private void FrmProvincia_Load(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿using PlantAndHealth.BD;
 using PlantAndHealth.CL;
+using PlantAndHealth.Validaciones;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,23 +42,34 @@ namespace PlantAndHealth.UI
         {
             try
             {
-                stock.Bodega = (Bodega)comboBoxBodegas.SelectedItem;
-                stock.Articulo = (Articulo)comboBoxArticulos.SelectedItem;
-                stock.Cantidad = int.Parse(textBoxCantidad.Text);
+                if (validarFormatoCampos())
+                {
+                    stock.Bodega = (Bodega)comboBoxBodegas.SelectedItem;
+                    stock.Articulo = (Articulo)comboBoxArticulos.SelectedItem;
+                    stock.Cantidad = int.Parse(textBoxCantidad.Text);
+                    StockData.AñadirStock(stock);
+                    MessageBox.Show("Stock almacenado correctamente...");
+                    Global.LimpiarControles(this);
+                    this.Close();
 
+                }
+                else
+                {
+                    MessageBox.Show("Campos con formato incorrecto");
+                }
 
-                //Almacenamiento
-                //Global.StockAlmacen.AñadirStock(stock);
-                //Global.plantAndHealth.Bodega.AñadirBodega(bodega);
-                StockData.AñadirStock(stock);
-                MessageBox.Show("Stock almacenado correctamente...");
-                Global.LimpiarControles(this);
-                this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private bool validarFormatoCampos()
+        {
+            bool numberValidaciones = ValidarFormatoForms.validarNumbers(textBoxCantidad);
+            bool comboValidaciones = ValidarFormatoForms.validarComboBox(comboBoxBodegas,comboBoxArticulos);
+            return numberValidaciones && comboValidaciones;
         }
 
         private void FrmStock_Load(object sender, EventArgs e)
