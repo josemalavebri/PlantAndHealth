@@ -39,9 +39,6 @@ namespace PlantAndHealth.UI
                     articulo.PrecioUnitario = double.Parse(textBoxPrecio.Text);
                     articulo.Costo = double.Parse(textBoxCosto.Text);
 
-                    //Almacenamiento
-                    //Global.ArticuloAlmacen.AñadirArticulo(articulo);
-                    //Global.plantAndHealth.Articulo.AñadirArticulo(articulo);
                     ArticuloData.AñadirArticulo(articulo);
                     MessageBox.Show("Articulo almacenado correctamente...");
                     Global.LimpiarControles(this);
@@ -67,7 +64,6 @@ namespace PlantAndHealth.UI
 
         private void FrmArticulo_Load(object sender, EventArgs e)
         {
-            // Usar BeginInvoke para asegurarse de que el TextBoxNombre tenga el foco después de que el formulario se haya cargado
             this.BeginInvoke((Action)delegate
             {
                 textBoxCodigo.Select();

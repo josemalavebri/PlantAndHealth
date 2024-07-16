@@ -45,8 +45,6 @@ namespace PlantAndHealth.UI
                 {
                     MessageBox.Show("Campos con formato incorrecto");
                 }
-
-                
             }
             catch (Exception ex)
             {
@@ -57,13 +55,10 @@ namespace PlantAndHealth.UI
         private bool validarFormatoCampos()
         {
             bool textValidaciones = ValidarFormatoForms.validarTexts(textBoxNombres, textBoxApellidos);
-
             bool numberValidaciones = ValidarFormatoForms.validarNumbers(textBoxHorasCapacitacion);
-
             bool comboValidaciones = ValidarFormatoForms.validarComboBox(comboBoxCapacitacion);
 
             return textValidaciones && comboValidaciones;
-
         }
 
         private void FrmVendedor_Load(object sender, EventArgs e)

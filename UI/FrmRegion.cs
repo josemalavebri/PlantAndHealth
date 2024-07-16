@@ -35,10 +35,6 @@ namespace PlantAndHealth
             {
                 MessageBox.Show("Campos con formato incorrecto");
             }
-
-
-
-
         }
 
         private bool validarFormatoCampos()

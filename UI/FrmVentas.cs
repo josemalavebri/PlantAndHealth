@@ -133,7 +133,6 @@ namespace PlantAndHealth.UI
                 }
             }
 
-
             DetalleVentaData.AñadirDetalleVenta(detalleVenta);
 
         }
@@ -159,7 +158,6 @@ namespace PlantAndHealth.UI
                 descripcion = "" +articulo.Nombre+" - " +articulo.Familia;
                 dataGridView_detalleOrden.Rows.Add(descripcion, articulo.PrecioUnitario.ToString(), cantidad,total);
             }
-
             calcularPrecios();
         }
 
@@ -184,7 +182,6 @@ namespace PlantAndHealth.UI
                     }
                 }
             }
-
             txt_subtotal.Text = total.ToString();
             double iva = ((total * 0.14));
             txt_iva.Text = iva.ToString();
@@ -216,8 +213,6 @@ namespace PlantAndHealth.UI
             EliminarFinal(index);
             articulos.RemoveAt(index);
             calcularPrecios();
-
-
         }
     }
 

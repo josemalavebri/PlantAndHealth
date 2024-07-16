@@ -21,12 +21,10 @@ namespace PlantAndHealth.UI
         public FrmStock()
         {
             InitializeComponent();
-            //comboBoxBodegas.DataSource = Global.BodegaAlmacen.ObtenerBodegas();            
             comboBoxBodegas.DataSource = BodegaData.ObtenerBodegas();
             comboBoxBodegas.DisplayMember = "Nombre";
             comboBoxBodegas.ValueMember = "Id";
 
-            //comboBoxArticulos.DataSource = Global.ArticuloAlmacen.ObtenerArticulos();
             comboBoxArticulos.DataSource = ArticuloData.ObtenerArticulos();
             comboBoxArticulos.DisplayMember = "Nombre";
             comboBoxArticulos.ValueMember = "Id";
@@ -51,13 +49,11 @@ namespace PlantAndHealth.UI
                     MessageBox.Show("Stock almacenado correctamente...");
                     Global.LimpiarControles(this);
                     this.Close();
-
                 }
                 else
                 {
                     MessageBox.Show("Campos con formato incorrecto");
                 }
-
             }
             catch (Exception ex)
             {

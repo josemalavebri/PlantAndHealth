@@ -18,8 +18,6 @@ namespace PlantAndHealth.UI
         public FrmProvincia()
         {
             InitializeComponent();
-            //comboBoxRegiones.DataSource = Global.RegionAlmacen.ObtenerRegiones();
-            //comboBoxRegiones.DataSource = Global.plantAndHealth.Region.ObtenerRegiones();
             comboBoxRegiones.DataSource = RegionData.ObtenerRegiones();
             comboBoxRegiones.DisplayMember = "Nombre";
             comboBoxRegiones.ValueMember = "Id";
@@ -65,7 +63,6 @@ namespace PlantAndHealth.UI
             bool comboValidaciones = ValidarFormatoForms.validarComboBox(comboBoxRegiones);
 
             return textValidaciones && comboValidaciones;
-
         }
 
         private void FrmProvincia_Load(object sender, EventArgs e)

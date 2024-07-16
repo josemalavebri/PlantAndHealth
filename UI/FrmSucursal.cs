@@ -19,8 +19,6 @@ namespace PlantAndHealth.UI
         public FrmSucursal()
         {
             InitializeComponent();
-            //comboBoxComunas.DataSource = Global.ComunaAlmacen.ObtenerComunas();
-            //comboBoxComunas.DataSource = Global.plantAndHealth.Comuna.ObtenerComunas();
             comboBoxComunas.DataSource = ComunaData.ObtenerComunas();
             comboBoxComunas.DisplayMember = "Nombre";
             comboBoxComunas.ValueMember = "Id";
@@ -36,7 +34,6 @@ namespace PlantAndHealth.UI
         {
             try
             {
-
                 if (validarFormatoCampos())
                 {
                     sucursal.Nombre = textBoxNombre.Text;
@@ -50,8 +47,6 @@ namespace PlantAndHealth.UI
                 {
                     MessageBox.Show("Campos con formato incorrecto");
                 }
-
-               
             }
             catch (Exception ex)
             {

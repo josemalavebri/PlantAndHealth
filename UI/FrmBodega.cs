@@ -19,8 +19,6 @@ namespace PlantAndHealth.UI
         public FrmBodega()
         {
             InitializeComponent();
-            //comboBoxSucursales.DataSource = Global.SucursalAlmacen.ObtenerSucursales();
-            //comboBoxSucursales.DataSource = Global.plantAndHealth.Sucursal.ObtenerSucursales();
             comboBoxSucursales.DataSource = SucursalData.ObtenerSucursales();
             comboBoxSucursales.DisplayMember = "Nombre";
             comboBoxSucursales.ValueMember = "Id";
