@@ -65,6 +65,7 @@
             this.lbl_clientes = new System.Windows.Forms.Label();
             this.comboBoxClientes = new System.Windows.Forms.ComboBox();
             this.lbl_codigo = new System.Windows.Forms.Label();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox_itemCantidad.SuspendLayout();
             this.groupBox_detalleOrden.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_detalleOrden)).BeginInit();
@@ -99,6 +100,7 @@
             this.button_eliminar.Size = new System.Drawing.Size(47, 40);
             this.button_eliminar.TabIndex = 9;
             this.button_eliminar.UseVisualStyleBackColor = true;
+            this.button_eliminar.Click += new System.EventHandler(this.button_eliminar_Click);
             // 
             // button_agregar
             // 
@@ -126,6 +128,7 @@
             this.btn_cancelar.TabIndex = 17;
             this.btn_cancelar.Text = "&Cancelar";
             this.btn_cancelar.UseVisualStyleBackColor = true;
+            this.btn_cancelar.Click += new System.EventHandler(this.btn_cancelar_Click);
             // 
             // btn_guardar
             // 
@@ -219,12 +222,14 @@
             this.Descripcion,
             this.Precio,
             this.Cantidad,
-            this.Total});
+            this.Total,
+            this.Id});
             this.dataGridView_detalleOrden.Location = new System.Drawing.Point(12, 19);
             this.dataGridView_detalleOrden.Name = "dataGridView_detalleOrden";
             this.dataGridView_detalleOrden.ReadOnly = true;
             this.dataGridView_detalleOrden.Size = new System.Drawing.Size(527, 137);
             this.dataGridView_detalleOrden.TabIndex = 10;
+            this.dataGridView_detalleOrden.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_detalleOrden_CellContentClick);
             // 
             // Descripcion
             // 
@@ -402,6 +407,13 @@
             this.lbl_codigo.TabIndex = 0;
             this.lbl_codigo.Text = "N°";
             // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
             // FrmVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -461,5 +473,6 @@
         private System.Windows.Forms.TextBox txt_subtotal;
         private System.Windows.Forms.ComboBox comboBoxBodega;
         private System.Windows.Forms.Label lbl_residencia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
     }
 }

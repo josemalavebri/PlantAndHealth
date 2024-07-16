@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +21,9 @@ namespace PlantAndHealth.UI
     {
         Ventas venta = new Ventas();
         List<Articulo> articulos = new List<Articulo>();
+        private int id;
+        private int index;
+
         public FrmVentas()
         {
             InitializeComponent();
@@ -26,12 +31,12 @@ namespace PlantAndHealth.UI
             comboBoxClientes.DataSource = ClienteData.ObtenerCliente();
             comboBoxClientes.DisplayMember = "Nombres";
             comboBoxClientes.ValueMember = "Numero";
-
+            */
             comboBoxBodega.DataSource = BodegaData.ObtenerBodegas();
             comboBoxBodega.DisplayMember = "Nombres";
-            comboBoxBodega.ValueMember = "Id";
+            comboBoxBodega.ValueMember = "Nombre";
            
-
+            /*
             comboBoxVendedores.DataSource = VendedorData.ObtenerVendedor();
             comboBoxVendedores.DisplayMember = "Nombres";
             comboBoxVendedores.ValueMember = "Id";
@@ -39,6 +44,10 @@ namespace PlantAndHealth.UI
             comboBox_items.DataSource = ArticuloData.ObtenerArticulos();
             comboBox_items.DisplayMember = "Nombre";
             comboBox_items.ValueMember = "Id";
+
+            txt_iva.Enabled = false;
+            txt_subtotal.Enabled = false;
+            txt_total.Enabled = false;
         }
 
         private void FrmVentas_Load(object sender, EventArgs e)
@@ -52,12 +61,24 @@ namespace PlantAndHealth.UI
             {
                 textBoxNombres.Text = clienteSeleccionado.Nombres;
                 textBoxApellidos.Text = clienteSeleccionado.Apellidos;
+
             }
         }
 
         private void groupBox_informacion_Enter(object sender, EventArgs e)
         {
 
+        }
+
+
+
+
+        private void EliminarFinal(int index)
+        {
+            if (index >= 0 && index < dataGridView_detalleOrden.Rows.Count)
+            {
+                dataGridView_detalleOrden.Rows.RemoveAt(index);
+            }
         }
 
         private void btn_guardar_Click(object sender, EventArgs e)
@@ -75,7 +96,7 @@ namespace PlantAndHealth.UI
                 venta.Bodega = (Bodega)comboBoxBodega.SelectedItem;
 
                 VentaData.AñadirVenta(venta);
-
+                guardarDetalleVenta();
                 MessageBox.Show("Comuna almacenada correctamente...");
                 Global.LimpiarControles(this);
                 this.Close();
@@ -89,15 +110,32 @@ namespace PlantAndHealth.UI
 
         }
 
-        private bool validarFormatoCampos()
+
+        private string generacionDocumento()
         {
-            /*
-            bool textValidaciones = ValidarFormatoForms.validarTexts(textBoxNombres, textBoxApellidos);
-            bool numberValidaciones = ValidarFormatoForms.validarNumbers(textBoxHorasCapacitacion);
-            bool comboValidaciones = ValidarFormatoForms.validarComboBox(comboBoxCapacitacion);
-            return textValidaciones && comboValidaciones;
-            */
-            return true;
+            id++;
+            return ""+ "FAC00584U" + id;
+        }
+
+        private void guardarDetalleVenta()
+        {
+            DetalleVenta detalleVenta = new DetalleVenta();
+
+            foreach (DataGridViewRow row in dataGridView_detalleOrden.Rows)
+            {
+                // Asegúrate de que la fila no es una fila nueva (en blanco)
+                if (!row.IsNewRow)
+                {
+                    detalleVenta.Documento = generacionDocumento();
+                    detalleVenta.CodigoProducto = row.Cells["Id"].Value.ToString();
+                    detalleVenta.PrecioUnitario = double.Parse(row.Cells["Precio"].Value.ToString());
+                    detalleVenta.Cantidad = int.Parse(row.Cells["Cantidad"].Value.ToString());
+                    detalleVenta.Total = double.Parse(row.Cells["Total"].Value.ToString());
+                }
+            }
+
+
+            DetalleVentaData.AñadirDetalleVenta(detalleVenta);
 
         }
 
@@ -105,26 +143,83 @@ namespace PlantAndHealth.UI
         {
             Articulo articulo = (Articulo)comboBox_items.SelectedItem;
             articulos.Add(articulo);
-            cargarGridDetalleVentas(articulos);
+            int cantidad = int.Parse(txt_cantidad.Text);
+            cargarGridDetalleVentas(articulos, cantidad);
+
 
         }
 
-        private void cargarGridDetalleVentas(int rowIndex)
+        private void cargarGridDetalleVentas(List<Articulo> articulos, int cantidad)
         {
+            dataGridView_detalleOrden.Rows.Clear();
 
-            if (rowIndex < 0 || rowIndex >= dataGridView_detalleOrden.Rows.Count) return;
-            var row = dataGridView_detalleOrden.Rows[rowIndex];
-            if (row.Cells["Precio"].Value != null && row.Cells
-            ["Cantidad"].Value != null)
+            string descripcion = "";
+            foreach (var articulo in articulos)
             {
-                decimal precio = Convert.ToDecimal(row.Cells
-                ["Precio"].Value);
-                int cantidad = Convert.ToInt32(row.Cells
-                ["Cantidad"].Value);
-                row.Cells["Total"].Value = precio * cantidad;
+                double total = cantidad * articulo.PrecioUnitario;
+                descripcion = "" +articulo.Nombre+" - " +articulo.Familia;
+                dataGridView_detalleOrden.Rows.Add(descripcion, articulo.PrecioUnitario.ToString(), cantidad,total);
             }
+
+            calcularPrecios();
+        }
+
+        private void calcularPrecios()
+        {
+            double total = 0;
+
+            validarFormatoCampos();
+            foreach (DataGridViewRow row in dataGridView_detalleOrden.Rows)
+            {
+                // Asegúrate de que la fila no es una fila nueva (en blanco)
+                if (!row.IsNewRow)
+                {
+                    // Supongamos que las columnas de precio unitario y cantidad son "PrecioUnitario" y "Cantidad"
+                    double precioUnitario;
+                    int cantidad;
+
+                    if (double.TryParse(row.Cells["Precio"].Value?.ToString(), out precioUnitario) &&
+                        int.TryParse(row.Cells["Cantidad"].Value?.ToString(), out cantidad))
+                    {
+                        total += precioUnitario * cantidad;
+                    }
+                }
+            }
+
+            txt_subtotal.Text = total.ToString();
+            double iva = ((total * 0.14));
+            txt_iva.Text = iva.ToString();
+            total = total + iva;
+            txt_total.Text = total.ToString();
+        }
+
+        private bool validarFormatoCampos()
+        {
+            bool textValidaciones = ValidarFormatoForms.validarTexts(txt_cantidad,txt_iva,txt_subtotal,txt_total);
+            bool comboValidaciones = ValidarFormatoForms.validarComboBox(comboBoxVendedores,comboBoxClientes,comboBox_items,comboBoxBodega);
+            return textValidaciones && comboValidaciones;
+
+
+        }
+
+        private void btn_cancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void dataGridView_detalleOrden_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            index = e.RowIndex;
+        }
+
+        private void button_eliminar_Click(object sender, EventArgs e)
+        {
+            EliminarFinal(index);
+            articulos.RemoveAt(index);
+            calcularPrecios();
 
 
         }
     }
+
 }
