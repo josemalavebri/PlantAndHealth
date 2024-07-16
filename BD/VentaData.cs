@@ -15,7 +15,7 @@ namespace PlantAndHealth.BD
         {
             using (SqlConnection connection = DatabaseConnection.GetConnection())
             {
-                using (SqlCommand cmd = new SqlCommand("spAñadirVenta", connection))
+                using (SqlCommand cmd = new SqlCommand("SP_CREAR_VENTA", connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID_CLIENTE", ventas.Cliente.Numero);

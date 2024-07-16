@@ -15,7 +15,7 @@ namespace PlantAndHealth.BD
         {
             using (SqlConnection connection = DatabaseConnection.GetConnection())
             {
-                using (SqlCommand cmd = new SqlCommand("spAñadirVendedor", connection))
+                using (SqlCommand cmd = new SqlCommand("SP_CREAR_VENTA", connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Nombre", vendedores.Nombres);
@@ -35,7 +35,7 @@ namespace PlantAndHealth.BD
 
             using (SqlConnection connection = DatabaseConnection.GetConnection())
             {
-                using (SqlCommand cmd = new SqlCommand("SP_OBTENER_POR_VENDEDORES", connection))
+                using (SqlCommand cmd = new SqlCommand("SP_OBTENER_VENDEDOR", connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     connection.Open();
@@ -49,7 +49,7 @@ namespace PlantAndHealth.BD
                                 Id = Convert.ToInt32(reader["ID_VENDEDOR"]),
                                 Nombres = reader["Nombre"].ToString(),
                                 Apellidos = reader["Apellido"].ToString(),
-                                TipoCapacitacion = reader["TIPO_ CAPACITACION"].ToString(),
+                                TipoCapacitacion = reader["TIPO_CAPACITACION"].ToString(),
                                 HorasCapacitacion = Convert.ToInt32(reader["HORAS_CAPACITACION"])
                             };
                             vendedores.Add(vendedor);

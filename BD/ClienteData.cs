@@ -37,7 +37,7 @@ namespace PlantAndHealth.BD
 
             using (SqlConnection connection = DatabaseConnection.GetConnection())
             {
-                using (SqlCommand cmd = new SqlCommand("SP_OBTENER_POR_CLIENTES", connection))
+                using (SqlCommand cmd = new SqlCommand("SP_OBTENER_CLIENTE", connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     connection.Open();

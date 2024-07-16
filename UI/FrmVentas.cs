@@ -27,24 +27,23 @@ namespace PlantAndHealth.UI
         public FrmVentas()
         {
             InitializeComponent();
-            /*
+            
             comboBoxClientes.DataSource = ClienteData.ObtenerCliente();
             comboBoxClientes.DisplayMember = "Nombres";
             comboBoxClientes.ValueMember = "Numero";
-            */
+            
             comboBoxBodega.DataSource = BodegaData.ObtenerBodegas();
             comboBoxBodega.DisplayMember = "Nombres";
             comboBoxBodega.ValueMember = "Nombre";
            
-            /*
             comboBoxVendedores.DataSource = VendedorData.ObtenerVendedor();
             comboBoxVendedores.DisplayMember = "Nombres";
             comboBoxVendedores.ValueMember = "Id";
-             */
+            
             comboBox_items.DataSource = ArticuloData.ObtenerArticulos();
             comboBox_items.DisplayMember = "Nombre";
             comboBox_items.ValueMember = "Id";
-
+            Global.LimpiarControles(this);
             txt_iva.Enabled = false;
             txt_subtotal.Enabled = false;
             txt_total.Enabled = false;
@@ -97,7 +96,7 @@ namespace PlantAndHealth.UI
 
                 VentaData.AñadirVenta(venta);
                 guardarDetalleVenta();
-                MessageBox.Show("Comuna almacenada correctamente...");
+                MessageBox.Show("Venta almacenada correctamente...");
                 Global.LimpiarControles(this);
                 this.Close();
 

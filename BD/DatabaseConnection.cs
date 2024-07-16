@@ -12,7 +12,7 @@ namespace PlantAndHealth.BD
     public static class DatabaseConnection
     {
         //private static string connectionString = "Server=ENTERPRISE/DESARROLLO;Database=PlantAndHealth;User Id=sa;Password=P2ssw0rd;";
-        private static string connectionString = ("server=Robert; database=PlantAndHealth2; Integrated Security=true; TrustServerCertificate=true");
+        private static string connectionString = ("server=LAPTOP-3RL0DTQR\\MSSQLSERVERR; database=PlantAndHealth2; Integrated Security=true; TrustServerCertificate=true");
         public static SqlConnection GetConnection()
         {
             return new SqlConnection(connectionString);
